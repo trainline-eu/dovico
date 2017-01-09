@@ -1,0 +1,15 @@
+stages:
+  - build
+  - test
+
+build docker image:
+  stage: build
+  tags: [ docker ]
+  script:
+    - make docker-build-image TAG=${CI_BUILD_REF}
+
+specs:
+  stage: test
+  tags: [ docker ]
+  script:
+    - make docker-test TAG=$CI_BUILD_REF

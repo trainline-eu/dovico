@@ -1,0 +1,26 @@
+# Personal token. Can be reset through Dovico setting page
+user_token: "...."
+# Your company token
+client_token: "...."
+assignments:
+  default_day:
+    - project_id: 1234
+      task_id:    100
+      hours:      3
+    - project_id: 9999
+      task_id:    120
+      hours:      2
+    - project_id: 4321
+      task_id:    424
+      hours:      2
+  # Quotes around day are mandatory
+  # On leave: use an empty array
+  '2016-01-17': []
+  # Specific day: redefine each tasks
+  '2017-12-19':
+    - project_id: 1234
+      task_id:    456
+      hours:      6
+    - project_id: 4321
+      task_id:    424
+      hours:      1
