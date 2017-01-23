@@ -14,39 +14,39 @@ test: bundler
 	bundle exec rake spec
 
 help:
-	bundle exec bin/client.rb --help
+	bundle exec bin/dovico --help
 
 tasks:
-	bundle exec bin/client.rb --tasks
+	bundle exec bin/dovico --tasks
 
 myself:
-	bundle exec bin/client.rb --myself
+	bundle exec bin/dovico --myself
 
 # Fill actions
 current_week:
-	bundle exec bin/client.rb --fill --current-week
+	bundle exec bin/dovico --fill --current-week
 
 week:
-	bundle exec bin/client.rb --fill --year=$(YEAR) --week=$(WEEK)
+	bundle exec bin/dovico --fill --year=$(YEAR) --week=$(WEEK)
 
 today:
-	bundle exec bin/client.rb --fill --today
+	bundle exec bin/dovico --fill --today
 
 day:
-	bundle exec bin/client.rb --fill --day=$(DAY)
+	bundle exec bin/dovico --fill --day=$(DAY)
 
 # Submit actions
 submit-current-week:
-	bundle exec bin/client.rb --submit --current-week
+	bundle exec bin/dovico --submit --current-week
 
 submit-week:
-	bundle exec bin/client.rb --submit --year=$(YEAR) --week=$(WEEK)
+	bundle exec bin/dovico --submit --year=$(YEAR) --week=$(WEEK)
 
 submit-day:
-	bundle exec bin/client.rb --submit --day=$(DAY)
+	bundle exec bin/dovico --submit --day=$(DAY)
 
 submit-today:
-	bundle exec bin/client.rb --submit --today
+	bundle exec bin/dovico --submit --today
 
 # Private - ensure gems are up-to-date
 bundler:
