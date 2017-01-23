@@ -20,7 +20,7 @@ To generate a token:
 # Personal token. Can be reset through Dovico setting page
 user_token: "<token you have copied from dovico.net page>"
 # Your company's token
-client_token: "<token given by your company's dovico admin"
+client_token: "<token given by your company's dovico admin>"
 ~~~
 
 ## Install required libraries
@@ -34,11 +34,11 @@ client_token: "<token given by your company's dovico admin"
 $ make tasks
 == List of available projects ==
 Project | Task | Description
-   1238 |  100 | C004 - iOS Optimisation: Core Development
-   1239 |  100 | C005 - iOS New Functionality: Core Development
-   1241 |  100 | C007 - Android Optimisation: Core Development
-   1242 |  100 | C008 - Android New Functionality: Core Development
-   1243 |  100 | C009 - Desktop Optimisation: Core Development
+   1200 |  100 | Sauron Project: Forge the One Ring
+   1200 |  110 | Sauron Project: Attack Gondor
+   1400 |  100 | Gandalf Project: Meet Bilbo
+   1400 |  120 | Gandalf Project: Convince Frodo
+   1600 |  100 | Frodo Project: Go home
 ~~~
 
 * For each tasks you work on, note the Project, Task and hours spent. You should have a total of 7 hours of work each day.
