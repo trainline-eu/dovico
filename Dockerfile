@@ -13,7 +13,8 @@ WORKDIR /home/dovico
 # inside the app directory
 ENV  BUNDLE_APP_CONFIG /home/dovico/.bundle/
 # Copy dependency file
-COPY ./Gemfile.lock /home/dovico/Gemfile.lock
+COPY ./dovico-client.gemspec /home/dovico/dovico-client.gemspec
+COPY ./lib/dovico/version.rb /home/dovico/lib/dovico/version.rb
 COPY ./Gemfile /home/dovico/Gemfile
 
 # Bundle

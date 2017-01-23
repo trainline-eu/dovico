@@ -1,3 +1,4 @@
+require 'dovico/version'
 require 'dovico/api_client'
 require 'dovico/app'
 require 'dovico/model/assignment'

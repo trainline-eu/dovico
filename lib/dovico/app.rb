@@ -4,7 +4,6 @@ module Dovico
   class App
     include EasyAppHelper
 
-    VERSION = '1.0.0'
     NAME = 'Dovico Simple Client'
     DESCRIPTION = <<EOL
 Simple client for Dovico TimeSheet web application.
@@ -17,7 +16,7 @@ EOL
     def initialize
       config.config_file_base_name = 'dovico'
       config.describes_application app_name: NAME,
-                                   app_version: VERSION,
+                                   app_version: Dovico::VERSION,
                                    app_description: DESCRIPTION
       add_script_options
 

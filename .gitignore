@@ -1,2 +1,4 @@
 dovico.yml
 coverage/
+*.gem
+Gemfile.lock
