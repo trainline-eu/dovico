@@ -34,7 +34,7 @@ EOL
       config.add_command_line_section('Submit the timesheets') do |slop|
         slop.on :submit,       'Submit timesheets',    argument: false
       end
-      config.add_command_line_section('Date options (for --fill and --submit)') do |slop|
+      config.add_command_line_section('Date options (required for --fill and --submit)') do |slop|
         slop.on :current_week, 'Current week', argument: false
         slop.on :today,        'Current day',  argument: false
         slop.on :day,          'Specific day', argument: true
@@ -44,7 +44,9 @@ EOL
     end
 
     def run
-      if config[:help] || !(config[:myself] || config[:tasks] || config[:fill] || config[:submit])
+      settings = ConfigParser.new(config)
+
+      if settings.needs_help?
         display_help
         exit 0
       end
@@ -58,7 +60,7 @@ EOL
       end
 
       if config[:fill] || config[:submit]
-        start_date, end_date = parse_date_options
+        start_date, end_date = settings.date_options
 
         time_entry_generator = TimeEntryGenerator.new(
           assignments: config["assignments"],
@@ -87,48 +89,14 @@ EOL
 
     def display_myself
       puts "Informations about yourself"
-      puts " - ID:         #{myself.id}"
-      puts " - First Name: #{myself.first_name}"
-      puts " - Last Name:  #{myself.last_name}"
+      puts myself.formatted_text
       puts ""
     end
 
     def display_tasks
-      projects = Project.all
-
       puts "== List of available projects =="
-      puts " Project | Task | Description"
-      projects.each do |project|
-        if project.tasks.count > 0
-          project.tasks.each do |task|
-            puts sprintf ' %7d | %4d | %s: %s', project.id, task.id, project.name, task.name
-          end
-        else
-          puts sprintf " %7d |      | %s (No tasks linked)", project.id, task.name
-        end
-      end
+      puts Project.formatted_text_all
       puts ""
-    end
-
-    def parse_date_options
-      if config[:week]
-        year = config[:year] || Date.current.year
-        start_date = Date.commercial(year, config[:week]).beginning_of_week
-        end_date = start_date.advance(days: 4)
-      elsif config[:current_week]
-        start_date = Date.current.beginning_of_week
-        end_date = start_date.advance(days: 4)
-      elsif config[:day]
-        start_date = end_date = Date.parse(config[:day])
-      elsif config[:today]
-        start_date = end_date = Date.current
-      else
-        puts "Error : You must precise one date options"
-        display_help
-        exit 1
-      end
-
-      [start_date, end_date]
     end
 
     def display_help

@@ -1,6 +1,7 @@
 require 'dovico/version'
 require 'dovico/api_client'
 require 'dovico/app'
+require 'dovico/config_parser'
 require 'dovico/model/assignment'
 require 'dovico/model/time_entry_generator'
 require 'dovico/model/employee'

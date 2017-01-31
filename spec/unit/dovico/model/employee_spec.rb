@@ -10,6 +10,10 @@ module Dovico
       }.stringify_keys
     end
 
+    subject do
+      Dovico::Employee.parse(employee_api_hash)
+    end
+
     describe ".parse" do
       it "parses the hash" do
         employee = Dovico::Employee.parse(employee_api_hash)
@@ -38,6 +42,12 @@ module Dovico
         expect(ApiClient).to have_received(:get).with("#{Dovico::Employee::URL_PATH}/Me")
         expect(myself).to be_an(Dovico::Employee)
         expect(myself.id).to eq('123')
+      end
+    end
+
+    describe '#formatted_text' do
+      it 'returns object with formatted text' do
+        expect(subject.formatted_text).to eq(" - ID:         123\n - First Name: James\n - Last Name:  Bond")
       end
     end
   end
