@@ -17,6 +17,9 @@ COPY ./dovico-client.gemspec /home/dovico/dovico-client.gemspec
 COPY ./lib/dovico/version.rb /home/dovico/lib/dovico/version.rb
 COPY ./Gemfile /home/dovico/Gemfile
 
+# Ensure UTF8 strings can be used
+ENV LANG C.UTF-8
+
 # Bundle
 RUN bundle install
 
