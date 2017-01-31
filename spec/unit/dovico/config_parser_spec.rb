@@ -41,6 +41,14 @@ module Dovico
             expect(subject.date_options).to eq([Date.parse('2017-10-09'), Date.parse('2017-10-13')])
           end
         end
+
+        context 'with start and end options' do
+          let(:config) { { start: '2017-10-12', end: '2017-12-13' } }
+
+          it 'returns the provided dates' do
+            expect(subject.date_options).to eq([Date.parse('2017-10-12'), Date.parse('2017-12-13')])
+          end
+        end
       end
 
       context 'with today options' do
