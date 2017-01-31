@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext/hash'
+
 require 'dovico/version'
 require 'dovico/api_client'
 require 'dovico/app'

@@ -1,5 +1,4 @@
-[![build status](https://scm.capitainetrain.com/capitainetrain/dovico-client/badges/master/build.svg)](https://scm.capitainetrain.com/capitainetrain/dovico-client/commits/master)
-[![coverage report](https://scm.capitainetrain.com/capitainetrain/dovico-client/badges/master/coverage.svg)](https://scm.capitainetrain.com/capitainetrain/dovico-client/commits/master)
+[![Build Status](https://travis-ci.org/trainline-eu/dovico.svg?branch=master)](https://travis-ci.org/trainline-eu/dovico)
 
 Repository for Dovico API management.
 
