@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q(Simple client & tools for http://www.dovico.com/.)
   s.description = %q(Simple client & tools for http://www.dovico.com/.)
 
-  s.files         = `git ls-files`.split("\n")
+  s.files         = `git ls-files`.split("\n") - ['bin/console']
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_paths = ['lib']

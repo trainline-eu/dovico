@@ -5,6 +5,12 @@ module Dovico
 
     attribute :tasks
 
+    def self.parse(hash)
+      project = super(hash)
+      project.tasks ||= []
+      project
+    end
+
     def self.all
       projects_search = ApiClient.get(URL_PATH)
       projects = projects_search["Assignments"].map {|project_hash| parse(project_hash) }
@@ -13,6 +19,27 @@ module Dovico
         tasks_search = ApiClient.get("#{URL_PATH}#{project.assignement_id}")
         project.tasks = tasks_search["Assignments"].map {|task_hash| Task.parse(task_hash) }
       end
+
+      projects
+    end
+
+    def self.formatted_text_all
+      text = " Project | Task | Description"
+      text += all.map(&:formatted_text).join("\n")
+    end
+
+    def formatted_text
+      text = ''
+
+      if tasks.count > 0
+        tasks.each do |task|
+          text += sprintf ' %7d | %4d | %s: %s', id, task.id, name, task.name
+        end
+      else
+        text += sprintf " %7d |      | %s (No tasks linked)", id, name
+      end
+
+      text
     end
   end
 end

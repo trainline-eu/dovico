@@ -2,6 +2,10 @@ require "helper"
 
 module Dovico
   describe Dovico::Project do
+    subject do
+      Dovico::Project.parse(project_api_hash)
+    end
+
     let(:project_api_hash) do
       {
         "ItemID":       "123",
@@ -50,6 +54,23 @@ module Dovico
         task = project.tasks.first
         expect(task.id).to eq('789')
         expect(task.name).to eq('Task write specs')
+      end
+    end
+
+    describe ".formatted_text_all" do
+      before do
+        allow(ApiClient).to receive(:get).with(Dovico::Project::URL_PATH).and_return(projects_api_hash)
+        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}T456").and_return(tasks_api_hash)
+      end
+
+      it 'returns projects with formatted text' do
+        expect(Dovico::Project.formatted_text_all).to eq(" Project | Task | Description     123 |  789 | Project Dovico API Client: Task write specs")
+      end
+    end
+
+    describe '#formatted_text' do
+      it 'returns object with formatted text' do
+        expect(subject.formatted_text).to eq("     123 |      | Project Dovico API Client (No tasks linked)")
       end
     end
   end

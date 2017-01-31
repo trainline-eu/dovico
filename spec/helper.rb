@@ -7,6 +7,7 @@ SimpleCov.formatters = [
 SimpleCov.start do
   add_filter "db/"
   add_filter "spec/"
+  add_filter "lib/dovico/app.rb"
   add_group "Dovico", "lib/dovico"
 end
 require "rspec"
