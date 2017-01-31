@@ -1,8 +1,7 @@
-require 'typhoeus'
-require 'json'
-
 module Dovico
   class ConfigParser
+    AVAILABLE_ACTIONS = [:myself, :tasks, :show, :fill, :submit]
+
     def initialize(config)
       @config = config
       @start_date, @end_date = parse_date_options
@@ -11,7 +10,7 @@ module Dovico
     def needs_help?
       if config[:help]
         true
-      elsif !(config[:myself] || config[:tasks] || config[:fill] || config[:submit])
+      elsif AVAILABLE_ACTIONS.map{|action| config[action] }.compact.empty?
         true
       elsif (config[:fill] || config[:submit]) && !(@start_date && @end_date)
         true

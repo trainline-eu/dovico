@@ -24,7 +24,7 @@ module Dovico
       parse(employees["Employees"].first)
     end
 
-    def formatted_text
+    def to_s
 %{ - ID:         #{id}
  - First Name: #{first_name}
  - Last Name:  #{last_name}}

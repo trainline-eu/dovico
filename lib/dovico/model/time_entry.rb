@@ -12,6 +12,8 @@ module Dovico
     attribute :project_id
     attribute :task_id
     attribute :employee_id
+    attribute :sheet_id
+    attribute :sheet_status
     attribute :date
     attribute :total_hours
     attribute :description
@@ -24,6 +26,8 @@ module Dovico
         project_id: hash['Project']['ID'],
         task_id:    hash['Task']['ID'],
         employee_id:hash['Employee']['ID'],
+        sheet_id:   hash['Sheet']['ID'],
+        sheet_status: hash['Sheet']['Status'],
         date:       hash['Date'],
         total_hours:hash['TotalHours'],
         description:hash['Description']
@@ -33,6 +37,19 @@ module Dovico
     def self.get(id)
       entry = ApiClient.get("#{URL_PATH}/#{id}")["TimeEntries"].first
       TimeEntry.parse(entry)
+    end
+
+    def self.search(start_date, end_date)
+      api_response = ApiClient.get(
+        "#{URL_PATH}",
+        params: {
+          daterange: "#{start_date} #{end_date}"
+        },
+      )
+
+      api_response["TimeEntries"].map do |time_entry|
+        TimeEntry.parse(time_entry)
+      end
     end
 
     def self.batch_create!(assignments)
@@ -70,6 +87,19 @@ module Dovico
         "TotalHours": total_hours.to_s,
         "Description": description,
       }.compact.stringify_keys
+    end
+
+    def formal_sheet_status
+      case sheet_status
+      when "N"
+        :not_submitted
+      when "A"
+        :approved
+      when "U"
+        :under_review
+      when "R"
+        :rejected
+      end
     end
 
     private

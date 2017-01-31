@@ -29,12 +29,15 @@ EOL
         slop.on :tasks,  'Display info on tasks',    argument: false
       end
       config.add_command_line_section('Fill the timesheets') do |slop|
-        slop.on :fill,         'Fill the timesheet',    argument: false
+        slop.on :fill,         'Fill the timesheet', argument: false
+      end
+      config.add_command_line_section('Show the timesheets') do |slop|
+        slop.on :show,         'Show the filled timesheets', argument: false
       end
       config.add_command_line_section('Submit the timesheets') do |slop|
-        slop.on :submit,       'Submit timesheets',    argument: false
+        slop.on :submit,       'Submit timesheets', argument: false
       end
-      config.add_command_line_section('Date options (required for --fill and --submit)') do |slop|
+      config.add_command_line_section('Date options (required for --show, --fill and --submit)') do |slop|
         slop.on :current_week, 'Current week', argument: false
         slop.on :today,        'Current day',  argument: false
         slop.on :day,          'Specific day', argument: true
@@ -45,6 +48,7 @@ EOL
 
     def run
       settings = ConfigParser.new(config)
+      start_date, end_date = settings.date_options
 
       if settings.needs_help?
         display_help
@@ -59,16 +63,15 @@ EOL
         display_tasks
       end
 
-      if config[:fill] || config[:submit]
-        start_date, end_date = settings.date_options
+      if config[:show]
+        display_time_entries(start_date, end_date)
+      end
 
+      if config[:fill]
         time_entry_generator = TimeEntryGenerator.new(
           assignments: config["assignments"],
           employee_id: myself.id,
         )
-      end
-
-      if config[:fill]
         time_entries = time_entry_generator.generate(start_date, end_date)
 
         saved_time_entries = TimeEntry.batch_create!(time_entries)
@@ -89,13 +92,21 @@ EOL
 
     def display_myself
       puts "Informations about yourself"
-      puts myself.formatted_text
+      puts myself
       puts ""
     end
 
     def display_tasks
       puts "== List of available projects =="
-      puts Project.formatted_text_all
+      puts Project.format_all
+      puts ""
+    end
+
+    def display_time_entries(start_date, end_date)
+      puts "== List of Time Entries between #{start_date} and #{end_date} =="
+      formatter = TimeEntryFormatter.new(Project.all)
+      time_entries = TimeEntry.search(start_date, end_date)
+      puts formatter.format_entries(time_entries)
       puts ""
     end
 

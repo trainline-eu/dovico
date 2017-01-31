@@ -1,5 +1,3 @@
-require 'active_attr'
-
 module Dovico
   class TimeEntryGenerator
     DEFAULT_START_HOUR = 9
