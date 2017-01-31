@@ -97,7 +97,6 @@ Year can be set too:
 `make day DAY=2017-12-31`
 
 # Restrictions and known issues
-* The timesheet are currently created, but not submitted. You still need to login and submit your timesheet
 * The client can't edit already created timesheets for now.
 
 You are warmly welcome to contribute to the project!
