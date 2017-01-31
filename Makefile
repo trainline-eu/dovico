@@ -13,6 +13,9 @@ install:
 test: bundler
 	bundle exec rake spec
 
+build:
+	bundle exec gem build dovico-client.gemspec
+
 help:
 	bundle exec bin/dovico --help
 

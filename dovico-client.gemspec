@@ -3,16 +3,14 @@ require 'dovico/version'
 
 Gem::Specification.new do |s|
   s.name        = 'dovico'
-  s.licenses    = ['Private']
+  s.licenses    = ['MIT']
   s.version     = Dovico::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Theophile Helleboid']
+  s.authors     = ['Théophile Helleboid', 'Paul Bonaud']
   s.email       = ['theophile.helleboid@trainline.com']
-  s.homepage    = 'https://scm.capitainetrain.com/capitainetrain/dovico-client'
+  s.homepage    = 'https://rubygems.org/gems/dovico'
   s.summary     = %q(Simple client & tools for http://www.dovico.com/.)
   s.description = %q(Simple client & tools for http://www.dovico.com/.)
-
-  s.metadata['allowed_push_host'] = 'https://rubygems.lan.captaintrain.com/'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
