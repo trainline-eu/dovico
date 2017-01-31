@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.2'
+  s.required_ruby_version = '>= 2.2.2'
 
   s.add_dependency 'easy_app_helper'
   s.add_dependency 'active_attr'
