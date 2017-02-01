@@ -23,12 +23,12 @@ module Dovico
       projects
     end
 
-    def self.formatted_text_all
+    def self.format_all
       text = " Project | Task | Description"
-      text += all.map(&:formatted_text).join("\n")
+      text += all.map(&:to_s).join("\n")
     end
 
-    def formatted_text
+    def to_s
       text = ''
 
       if tasks.count > 0

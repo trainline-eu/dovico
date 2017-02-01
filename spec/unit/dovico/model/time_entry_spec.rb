@@ -20,6 +20,13 @@ module Dovico
         "ID": "333"
       }.stringify_keys
     end
+    let(:sheet_status) { "U" }
+    let(:sheet_hash) do
+      {
+        "ID": "444",
+        "Status": sheet_status,
+      }.stringify_keys
+    end
     let(:time_entry_api_hash) do
       {
         "ID":         "456",
@@ -28,6 +35,7 @@ module Dovico
         "Project":    project_hash,
         "Task":       task_hash,
         "Employee":   employee_hash,
+        "Sheet":      sheet_hash,
         "Date":       "2017-01-05",
         "TotalHours": "3",
         "Description": "Unit test",
@@ -42,6 +50,7 @@ module Dovico
         expect(time_entry.start_time).to eq('0800')
         expect(time_entry.project_id).to eq('111')
         expect(time_entry.employee_id).to eq('333')
+        expect(time_entry.sheet_id).to eq('444')
         expect(time_entry.total_hours).to eq('3')
       end
 
@@ -73,6 +82,30 @@ module Dovico
         time_entry = Dovico::TimeEntry.get('999')
 
         expect(ApiClient).to have_received(:get).with("#{Dovico::TimeEntry::URL_PATH}/999")
+        expect(time_entry).to be_an(Dovico::TimeEntry)
+        expect(time_entry.id).to eq('456')
+      end
+    end
+
+    describe ".search" do
+      let(:time_entry_list_api) do
+        {
+          "TimeEntries": [ time_entry_api_hash ]
+        }.stringify_keys
+      end
+
+      before do
+        allow(ApiClient).to receive(:get).and_return(time_entry_list_api)
+      end
+
+      it 'calls the API and return an TimeEntry object' do
+        time_entries = Dovico::TimeEntry.search(Date.parse('2017-01-10'), Date.parse('2017-01-20'))
+
+        expect(time_entries.count).to eq(1)
+
+        time_entry = time_entries.first
+
+        expect(ApiClient).to have_received(:get).with("#{Dovico::TimeEntry::URL_PATH}", { params: { daterange: "2017-01-10 2017-01-20" } })
         expect(time_entry).to be_an(Dovico::TimeEntry)
         expect(time_entry.id).to eq('456')
       end
@@ -162,6 +195,40 @@ module Dovico
           "TotalHours"  => "3",
           "Description" => "Unit test",
         )
+      end
+    end
+
+    describe "#formal_sheet_status" do
+      context 'not submitted' do
+        let(:sheet_status) { "N" }
+
+        it 'returns the correct symbol for the status' do
+          expect(subject.formal_sheet_status).to eq(:not_submitted)
+        end
+      end
+
+      context 'approved' do
+        let(:sheet_status) { "A" }
+
+        it 'returns the correct symbol for the status' do
+          expect(subject.formal_sheet_status).to eq(:approved)
+        end
+      end
+
+      context 'under review' do
+        let(:sheet_status) { "U" }
+
+        it 'returns the correct symbol for the status' do
+          expect(subject.formal_sheet_status).to eq(:under_review)
+        end
+      end
+
+      context 'rejected' do
+        let(:sheet_status) { "R" }
+
+        it 'returns the correct symbol for the status' do
+          expect(subject.formal_sheet_status).to eq(:rejected)
+        end
       end
     end
   end

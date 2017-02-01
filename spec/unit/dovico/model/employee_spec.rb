@@ -45,9 +45,9 @@ module Dovico
       end
     end
 
-    describe '#formatted_text' do
+    describe '#to_s' do
       it 'returns object with formatted text' do
-        expect(subject.formatted_text).to eq(" - ID:         123\n - First Name: James\n - Last Name:  Bond")
+        expect(subject.to_s).to eq(" - ID:         123\n - First Name: James\n - Last Name:  Bond")
       end
     end
   end
