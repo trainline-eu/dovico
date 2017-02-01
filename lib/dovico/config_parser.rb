@@ -40,6 +40,9 @@ module Dovico
         start_date = end_date = Date.parse(config[:day])
       elsif config[:today]
         start_date = end_date = Date.current
+      elsif config[:start] && config[:end]
+        start_date = Date.parse(config[:start])
+        end_date = Date.parse(config[:end])
       end
 
       [start_date, end_date]

@@ -41,6 +41,8 @@ EOL
         slop.on :current_week, 'Current week', argument: false
         slop.on :today,        'Current day',  argument: false
         slop.on :day,          'Specific day', argument: true
+        slop.on :start,        'Specific start day', argument: true
+        slop.on :end,          'Specific end day', argument: true
         slop.on :week,         'Specific "commercial" week. See https://www.epochconverter.com/weeks/',  argument: true, as: Integer
         slop.on :year,         '[optional] Specifiy year (for --week option), default current year',  argument: true, as: Integer
       end
