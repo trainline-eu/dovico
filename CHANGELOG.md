@@ -1,4 +1,6 @@
 # Next version
+
+# Version 1.1.0
 - Remove `bin/console` from the Gem
 - Add a ConfigParser and extract code into models
 - Update Gem metadata
