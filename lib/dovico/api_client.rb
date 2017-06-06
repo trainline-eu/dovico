@@ -24,6 +24,10 @@ module Dovico
         perform!(:put, path, params: params, body: body)
       end
 
+      def delete(path, params: {}, body: nil)
+        perform!(:delete, path, params: params, body: body)
+      end
+
       private
 
       attr_accessor :client_token, :user_token
@@ -60,7 +64,11 @@ module Dovico
           raise "Error during HTTP request"
         end
 
-        JSON.parse(response.body)
+        if response.body.length > 0
+          JSON.parse(response.body)
+        else
+          nil
+        end
       end
     end
   end

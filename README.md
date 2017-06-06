@@ -138,9 +138,18 @@ $ dovico --show --start=2017-01-02 --end=2017-01-12
 
 Once submitted, the timesheet can't be edited.
 
-# Restrictions and known issues
-* The client can't edit already created timesheets for now.
+## Delete timesheet
+`dovico --clear [date options]`
 
+A confirmation will be asked before the deletion.
+~~~
+$ dovico --clear --day=2017-01-05
+• 1 Time Entries to be deleted. Are you sure? (yes/no)
+yes
+✓ 1 Time Entries deleted
+~~~
+
+# Contributing
 You are warmly welcome to contribute to the project!
 
 # Dovico API Documentation

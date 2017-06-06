@@ -75,6 +75,10 @@ module Dovico
       ApiClient.put(URL_PATH, body: [to_api].to_json)
     end
 
+    def delete!
+      ApiClient.delete("#{URL_PATH}/#{id}")
+    end
+
     def to_api
       {
         "ID":         id,
