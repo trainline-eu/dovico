@@ -1,4 +1,5 @@
 # Next version
+- Update [README.md](README.md)
 
 # Version 1.1.0
 - Remove `bin/console` from the Gem
