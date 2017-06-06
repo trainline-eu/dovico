@@ -2,7 +2,7 @@ require 'active_attr'
 
 module Dovico
   class Assignment
-    URL_PATH = 'Assignments/'
+    URL_PATH = 'Assignments'
 
     include ActiveAttr::Model
 

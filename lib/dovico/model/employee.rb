@@ -2,7 +2,7 @@ require 'active_attr'
 
 module Dovico
   class Employee
-    URL_PATH = 'Employees/'
+    URL_PATH = 'Employees'
 
     include ActiveAttr::Model
 
