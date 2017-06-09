@@ -2,7 +2,7 @@ require 'active_attr'
 
 module Dovico
   class TimeEntry
-    URL_PATH = 'TimeEntries/'
+    URL_PATH = 'TimeEntries'
 
     include ActiveAttr::Model
 
@@ -41,7 +41,7 @@ module Dovico
 
     def self.search(start_date, end_date)
       api_response = ApiClient.get(
-        "#{URL_PATH}",
+        URL_PATH,
         params: {
           daterange: "#{start_date} #{end_date}"
         },
