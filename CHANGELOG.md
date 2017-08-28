@@ -1,5 +1,6 @@
 # Next version
 - Update [README.md](README.md)
+- Add `--clear` option to delete time entries
 
 # Version 1.1.0
 - Remove `bin/console` from the Gem

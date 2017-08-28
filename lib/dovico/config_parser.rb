@@ -1,6 +1,7 @@
 module Dovico
   class ConfigParser
-    AVAILABLE_ACTIONS = [:myself, :tasks, :show, :fill, :submit]
+    AVAILABLE_ACTIONS = [:myself, :tasks, :show, :fill, :submit, :clear]
+    DATE_REQUIRED_ACTIONS = [:show, :fill, :submit, :clear]
 
     def initialize(config)
       @config = config
@@ -12,7 +13,7 @@ module Dovico
         true
       elsif AVAILABLE_ACTIONS.map{|action| config[action] }.compact.empty?
         true
-      elsif (config[:fill] || config[:submit]) && !(@start_date && @end_date)
+      elsif !(@start_date && @end_date) && !DATE_REQUIRED_ACTIONS.map{|action| config[action] }.compact.empty?
         true
       else
         false

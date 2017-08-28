@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'easy_app_helper'
   s.add_dependency 'active_attr'
   s.add_dependency 'typhoeus'
+  s.add_dependency 'highline'
 
   s.add_development_dependency 'pry'
   s.add_development_dependency 'guard'

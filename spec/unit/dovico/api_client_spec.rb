@@ -77,5 +77,15 @@ module Dovico
         expect(response).to eq({"Stubbed": "Response"}.stringify_keys)
       end
     end
+
+    describe ".delete" do
+      it 'perform a DELETE request' do
+        stub_request(:delete, "#{Dovico::ApiClient::API_URL}TimeEntries/42?version=#{Dovico::ApiClient::API_VERSION}")
+          .to_return(body: '')
+
+        response = Dovico::ApiClient.delete('TimeEntries/42')
+        expect(response).to eq(nil)
+      end
+    end
   end
 end

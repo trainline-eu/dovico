@@ -1,4 +1,5 @@
 require 'easy_app_helper'
+require 'highline'
 
 module Dovico
   class App
@@ -37,7 +38,10 @@ EOL
       config.add_command_line_section('Submit the timesheets') do |slop|
         slop.on :submit,       'Submit timesheets', argument: false
       end
-      config.add_command_line_section('Date options (required for --show, --fill and --submit)') do |slop|
+      config.add_command_line_section('Clear the timesheets') do |slop|
+        slop.on :clear,        'Clear the timesheets', argument: false
+      end
+      config.add_command_line_section('Date options (required for --show, --fill, --submit and --clear)') do |slop|
         slop.on :current_week, 'Current week', argument: false
         slop.on :today,        'Current day',  argument: false
         slop.on :day,          'Specific day', argument: true
@@ -63,6 +67,10 @@ EOL
 
       if config[:tasks]
         display_tasks
+      end
+
+      if config[:clear]
+        clear_time_entries(start_date, end_date)
       end
 
       if config[:show]
@@ -112,8 +120,22 @@ EOL
       puts ""
     end
 
+    def clear_time_entries(start_date, end_date)
+      time_entries = TimeEntry.search(start_date, end_date)
+      if highline.agree("• #{time_entries.count} Time Entries to be deleted. Are you sure? (yes/no)")
+        time_entries.each do |time_entry|
+          time_entry.delete!
+        end
+        puts "✓ #{time_entries.count} Time Entries deleted"
+      end
+    end
+
     def display_help
       puts config.command_line_help
+    end
+
+    def highline
+      @highline ||= HighLine.new
     end
   end
 end

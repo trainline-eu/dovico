@@ -182,6 +182,18 @@ module Dovico
       end
     end
 
+    describe ".delete!" do
+      before do
+        allow(ApiClient).to receive(:delete)
+      end
+
+      it 'calls the API and delete TimeEntries objects' do
+        subject.delete!
+
+        expect(ApiClient).to have_received(:delete).with("#{Dovico::TimeEntry::URL_PATH}/#{subject.id}")
+      end
+    end
+
     describe ".to_api" do
       it 'serializes the object' do
         expect(subject.to_api).to eq(
