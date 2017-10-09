@@ -16,15 +16,19 @@ module Dovico
       projects = projects_search["Assignments"].map {|project_hash| parse(project_hash) }
 
       projects.each do |project|
-        tasks_search = ApiClient.get("#{URL_PATH}#{project.assignement_id}")
-        project.tasks = tasks_search["Assignments"].map {|task_hash| Task.parse(task_hash) }
+        tasks_search = ApiClient.get("#{URL_PATH}/#{project.assignement_id}")
+        tasks = tasks_search["Assignments"].map {|task_hash| Task.parse(task_hash) }
+
+        project.tasks = tasks.sort_by do |task|
+          task.id
+        end
       end
 
       projects
     end
 
     def self.format_all
-      text = " Project | Task | Description"
+      text = " Project | Task | Description\n"
       text += all.map(&:to_s).join("\n")
     end
 
@@ -32,9 +36,9 @@ module Dovico
       text = ''
 
       if tasks.count > 0
-        tasks.each do |task|
-          text += sprintf ' %7d | %4d | %s: %s', id, task.id, name, task.name
-        end
+        text += tasks.map do |task|
+          sprintf " %7d | %4d | %s: %s", id, task.id, name, task.name
+        end.join("\n")
       else
         text += sprintf " %7d |      | %s (No tasks linked)", id, name
       end

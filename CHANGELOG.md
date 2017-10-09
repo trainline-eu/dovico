@@ -1,6 +1,11 @@
 # Next version
+- Your contribution!
+
+# Version 1.2.0
 - Update [README.md](README.md)
 - Add `--clear` option to delete time entries
+- Fix a typo on Projet URL
+- Fix formatting tasks list when mutliple tasks are associated to an assignment
 
 # Version 1.1.0
 - Remove `bin/console` from the Gem

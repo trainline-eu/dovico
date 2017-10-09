@@ -20,7 +20,14 @@ module Dovico
         "Assignments": [project_api_hash]
       }.stringify_keys
     end
-    let(:task_api_hash) do
+    let(:task_api_hash_1) do
+      {
+        "ItemID":       "995",
+        "AssignmentID": "E456",
+        "Name":         "Task write specs, second part",
+      }.stringify_keys
+    end
+    let(:task_api_hash_2) do
       {
         "ItemID":       "789",
         "AssignmentID": "E456",
@@ -31,14 +38,14 @@ module Dovico
     end
     let(:tasks_api_hash) do
       {
-        "Assignments": [task_api_hash]
+        "Assignments": [task_api_hash_1, task_api_hash_2]
       }.stringify_keys
     end
 
     describe ".all" do
       before do
         allow(ApiClient).to receive(:get).with(Dovico::Project::URL_PATH).and_return(projects_api_hash)
-        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}T456").and_return(tasks_api_hash)
+        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}/T456").and_return(tasks_api_hash)
       end
 
       it "lists all the assignements" do
@@ -50,7 +57,7 @@ module Dovico
         expect(project.id).to eq('123')
         expect(project.name).to eq('Project Dovico API Client')
 
-        expect(project.tasks.count).to eq(1)
+        expect(project.tasks.count).to eq(2)
         task = project.tasks.first
         expect(task.id).to eq('789')
         expect(task.name).to eq('Task write specs')
@@ -60,11 +67,16 @@ module Dovico
     describe ".format_all" do
       before do
         allow(ApiClient).to receive(:get).with(Dovico::Project::URL_PATH).and_return(projects_api_hash)
-        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}T456").and_return(tasks_api_hash)
+        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}/T456").and_return(tasks_api_hash)
       end
 
       it 'returns projects with formatted text' do
-        expect(Dovico::Project.format_all).to eq(" Project | Task | Description     123 |  789 | Project Dovico API Client: Task write specs")
+        expected_strings = [
+          ' Project | Task | Description',
+          '     123 |  789 | Project Dovico API Client: Task write specs',
+          '     123 |  995 | Project Dovico API Client: Task write specs, second part',
+        ]
+        expect(Dovico::Project.format_all).to eq(expected_strings.join("\n"))
       end
     end
 
