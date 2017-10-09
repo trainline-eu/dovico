@@ -106,7 +106,7 @@ Project | Task | Description
 The date options are detailed below. All the other commands use the same format for these date options.
 
 ### For the current week
-`dovico --fill --current_week`
+`dovico --fill --current-week`
 
 ### For today
 `dovico --fill --today`
