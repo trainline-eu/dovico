@@ -1,5 +1,6 @@
 # Next version
 - Your contribution!
+- Update [README.md](README.md)
 
 # Version 1.2.0
 - Update [README.md](README.md)
