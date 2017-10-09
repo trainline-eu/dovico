@@ -62,17 +62,23 @@ assignments:
     - project_id: 4321
       task_id:    424
       hours:      2
-  # Quotes around day are mandatory
-  # On leave: use an empty array
-  '2016-01-17': []
-  # Specific day: redefine each tasks
-  '2017-12-19':
-    - project_id: 1234
-      task_id:    456
-      hours:      6
-    - project_id: 4321
-      task_id:    424
-      hours:      1
+  specific_days:
+    # Quotes around day are mandatory
+    # On leave: use an empty array
+    '2016-01-17': []
+    # Specific day: redefine each tasks
+    '2017-12-19':
+      - project_id: 1234
+        task_id:    456
+        hours:      6
+      - project_id: 4321
+        task_id:    424
+        hours:      1
+  specific_weeks:
+    '2016-52': [] # Christmas week
+  specific_months:
+    '2016-07': [] # No work on July
+
 ~~~
 
 # Usage
