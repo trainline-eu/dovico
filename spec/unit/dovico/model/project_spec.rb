@@ -38,7 +38,7 @@ module Dovico
     describe ".all" do
       before do
         allow(ApiClient).to receive(:get).with(Dovico::Project::URL_PATH).and_return(projects_api_hash)
-        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}T456").and_return(tasks_api_hash)
+        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}/T456").and_return(tasks_api_hash)
       end
 
       it "lists all the assignements" do
@@ -60,7 +60,7 @@ module Dovico
     describe ".format_all" do
       before do
         allow(ApiClient).to receive(:get).with(Dovico::Project::URL_PATH).and_return(projects_api_hash)
-        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}T456").and_return(tasks_api_hash)
+        allow(ApiClient).to receive(:get).with("#{Dovico::Project::URL_PATH}/T456").and_return(tasks_api_hash)
       end
 
       it 'returns projects with formatted text' do

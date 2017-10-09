@@ -16,7 +16,7 @@ module Dovico
       projects = projects_search["Assignments"].map {|project_hash| parse(project_hash) }
 
       projects.each do |project|
-        tasks_search = ApiClient.get("#{URL_PATH}#{project.assignement_id}")
+        tasks_search = ApiClient.get("#{URL_PATH}/#{project.assignement_id}")
         project.tasks = tasks_search["Assignments"].map {|task_hash| Task.parse(task_hash) }
       end
 
