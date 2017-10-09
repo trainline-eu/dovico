@@ -1,6 +1,7 @@
 # Next version
 - Your contribution!
 - Update [README.md](README.md)
+- Fix bug when no time entries were to be submitted
 
 # Version 1.2.0
 - Update [README.md](README.md)

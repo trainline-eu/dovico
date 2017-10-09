@@ -54,7 +54,11 @@ module Dovico
 
     def self.batch_create!(assignments)
       api_assignements = assignments.map(&:to_api)
-      ApiClient.post(URL_PATH, body: api_assignements.to_json)
+      if api_assignements.count > 0
+        ApiClient.post(URL_PATH, body: api_assignements.to_json)
+      else
+        []
+      end
     end
 
     def self.submit!(employee_id, start_date, end_date)
