@@ -120,13 +120,24 @@ module Dovico
         allow(ApiClient).to receive(:post)
       end
 
-      it 'calls the API and post TimeEntries objects' do
-        Dovico::TimeEntry.batch_create!(assignments)
+      context 'with time entries to be created' do
+        it 'calls the API and post TimeEntries objects' do
+          Dovico::TimeEntry.batch_create!(assignments)
 
-        expect(ApiClient).to have_received(:post).with(
-          "#{Dovico::TimeEntry::URL_PATH}",
-          body: [subject.to_api].to_json
-        )
+          expect(ApiClient).to have_received(:post).with(
+            "#{Dovico::TimeEntry::URL_PATH}",
+            body: [subject.to_api].to_json
+          )
+        end
+      end
+
+      context 'with no time entries to be created' do
+        it 'does not call the API and returns an empty array' do
+          result = Dovico::TimeEntry.batch_create!([])
+
+          expect(ApiClient).not_to have_received(:post)
+          expect(result).to eq([])
+        end
       end
     end
 
