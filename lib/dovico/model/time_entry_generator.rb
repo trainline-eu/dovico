@@ -50,7 +50,19 @@ module Dovico
     end
 
     def day_assignments(date)
-      assignments[date.to_s] || assignments["default_day"]
+      special_day(date) || special_week(date) || special_month(date) || assignments["default_day"]
+    end
+
+    def special_day(date)
+      assignments["special_days"] && assignments["special_days"][date.iso8601]
+    end
+
+    def special_week(date)
+      assignments["special_weeks"] && assignments["special_weeks"][date.strftime("%Y-%V")]
+    end
+
+    def special_month(date)
+      assignments["special_months"] && assignments["special_months"][date.strftime("%Y-%m")]
     end
   end
 end
