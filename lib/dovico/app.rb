@@ -84,8 +84,12 @@ EOL
         )
         time_entries = time_entry_generator.generate(start_date, end_date)
 
-        saved_time_entries = TimeEntry.batch_create!(time_entries)
-        puts "#{saved_time_entries["TimeEntries"].count} Entries created between #{start_date} and #{end_date}"
+        if time_entries.count > 0
+          saved_time_entries = TimeEntry.batch_create!(time_entries)
+          puts "#{saved_time_entries["TimeEntries"].count} Entries created between #{start_date} and #{end_date}"
+        else
+          puts "No entries to be created between #{start_date} and #{end_date}"
+        end
       end
 
       if config[:submit]
