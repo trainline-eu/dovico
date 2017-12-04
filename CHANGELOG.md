@@ -1,5 +1,7 @@
 # Next version
 - Your contribution!
+
+# Version 1.3.0
 - Update [README.md](README.md)
 - Fix bug when no time entries were to be submitted
 - **Breaking change**: Specific days must be configured in the special `specific_days` section in the configuration file
