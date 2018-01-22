@@ -1,5 +1,6 @@
 # Next version
 - Your contribution!
+- Remove `console` executable. Fixes #13
 
 # Version 1.3.0
 - Update [README.md](README.md)
