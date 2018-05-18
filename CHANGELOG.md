@@ -1,12 +1,13 @@
 # Next version
 - Your contribution!
-- Remove `console` executable. Fixes #13
+- Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes #15
+- Remove `console` executable. Fixes #12
 
 # Version 1.3.0
 - Update [README.md](README.md)
 - Fix bug when no time entries were to be submitted
-- **Breaking change**: Specific days must be configured in the special `specific_days` section in the configuration file
-- Specific weeks or months can be defined with `specific_weeks` and `specific_months` configuration
+- **Breaking change**: Specific days must be configured in the special `special_days` section in the configuration file
+- Specific weeks or months can be defined with `special_weeks` and `special_months` configuration
 ~~~json
 assignments:
   default_day:
@@ -19,7 +20,7 @@ assignments:
     - project_id: 4321
       task_id:    424
       hours:      2
-  specific_days:
+  special_days:
     # Quotes around day are mandatory
     # On leave: use an empty array
     '2016-01-17': []
@@ -31,9 +32,9 @@ assignments:
       - project_id: 4321
         task_id:    424
         hours:      1
-  specific_weeks:
+  special_weeks:
     '2016-52': [] # Christmas week
-  specific_months:
+  special_months:
     '2016-07': [] # No work on July
 ~~~
 
