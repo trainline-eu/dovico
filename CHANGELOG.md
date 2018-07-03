@@ -1,7 +1,9 @@
 # Next version
 - Your contribution!
-- Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes #15
-- Remove `console` executable. Fixes #12
+
+# Version 1.4.0
+- Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes trainline-eu/dovico#15
+- Remove `console` executable. Fixes trainline-eu/dovico#12
 
 # Version 1.3.0
 - Update [README.md](README.md)
