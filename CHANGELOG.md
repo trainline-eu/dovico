@@ -2,6 +2,7 @@
 - Your contribution!
 - Add ruby 2.6 and remove ruby 2.2 from [Travis CI](.travis.yml)
 - Set minimal versions of gems explicitly
+- Update minimal rubocop gem version (fix CVE-2017-8418)
 
 # Version 1.4.0
 - Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes trainline-eu/dovico#15
