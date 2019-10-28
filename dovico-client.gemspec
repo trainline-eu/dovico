@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'guard', '~> 2'
   s.add_development_dependency 'guard-rspec', '~> 4'
   s.add_development_dependency 'guard-rubocop', '~> 1'
-  s.add_development_dependency 'rubocop', '~> 0'
+  s.add_development_dependency 'rubocop', '>= 0.49.0'
   s.add_development_dependency 'ci_reporter', '~> 2'
   s.add_development_dependency 'ci_reporter_rspec', '~> 1'
   s.add_development_dependency 'rack-test'
