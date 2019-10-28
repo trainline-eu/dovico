@@ -1,5 +1,7 @@
 require 'typhoeus'
 require 'json'
+require 'uri'
+require 'cgi'
 
 module Dovico
   class ApiClient
@@ -28,6 +30,21 @@ module Dovico
         perform!(:delete, path, params: params, body: body)
       end
 
+      def get_paginated_list(path, object_key, **params)
+        results = get(path, **params)
+        objects = results[object_key]
+
+        loop do
+          next_page_uri = results["NextPageURI"]
+          break if next_page_uri.nil? || next_page_uri == "N/A"
+
+          results = get(next_page_uri)
+          objects += results[object_key]
+        end
+
+        { object_key => objects }
+      end
+
       private
 
       attr_accessor :client_token, :user_token
@@ -45,8 +62,22 @@ module Dovico
       end
 
       def perform!(method, path, params: {}, body: nil)
+        # Do not append URL if it's already passed in the path
+        uri = URI(path)
+        if uri.host.nil?
+          uri = URI(API_URL).merge(path)
+        end
+
+        # Merge query parameters to prevent duplicate
+        if uri.query.present?
+          params_hash = CGI.parse(uri.query).map {|k,v| [k, v.first] }.to_h.symbolize_keys
+
+          params.merge!(params_hash)
+          uri.query = nil
+        end
+
         request = Typhoeus::Request.new(
-          "#{API_URL}#{path}",
+          uri.to_s,
           method: method,
           params: params.merge(version: API_VERSION),
           headers: request_headers,

@@ -40,8 +40,9 @@ module Dovico
     end
 
     def self.search(start_date, end_date)
-      api_response = ApiClient.get(
+      api_response = ApiClient.get_paginated_list(
         URL_PATH,
+        "TimeEntries",
         params: {
           daterange: "#{start_date} #{end_date}"
         },

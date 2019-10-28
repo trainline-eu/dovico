@@ -87,5 +87,79 @@ module Dovico
         expect(response).to eq(nil)
       end
     end
+
+    describe ".get_paginated_list" do
+      context 'with a non paginated result' do
+        let(:response_body) do
+          {
+            "ExampleObjects": [
+              { id: 1 },
+              { id: 2 },
+            ],
+            "NextPageURI": "N/A"
+          }.to_json
+        end
+
+        it "returns the objects" do
+          stub_request(
+            :get,
+            "#{Dovico::ApiClient::API_URL}ExampleObjects?version=#{Dovico::ApiClient::API_VERSION}"
+          ).to_return(body: response_body)
+
+          response = Dovico::ApiClient.get_paginated_list('ExampleObjects', 'ExampleObjects')
+
+          expect(response).to eq(
+            {
+              "ExampleObjects": [
+                { id: 1 },
+                { id: 2 },
+              ]
+            }.deep_stringify_keys
+          )
+        end
+      end
+
+      context 'with a paginated result' do
+        let(:response_body_1) do
+          {
+            "ExampleObjects": [
+              { id: 1 },
+              { id: 2 },
+            ],
+            "NextPageURI": "#{Dovico::ApiClient::API_URL}ExampleObjects?next=1300&version=#{Dovico::ApiClient::API_VERSION}"
+          }.to_json
+        end
+        let(:response_body_2) do
+          {
+            "ExampleObjects": [
+              { id: 3 },
+              { id: 4 },
+            ],
+            "NextPageURI": "N/A"
+          }.to_json
+        end
+
+        it "queries the next page and return the objects concatened" do
+          stub_request(:get, "#{Dovico::ApiClient::API_URL}ExampleObjects?version=#{Dovico::ApiClient::API_VERSION}")
+            .to_return(body: response_body_1)
+          stub_request(:get, "#{Dovico::ApiClient::API_URL}ExampleObjects?next=1300&version=#{Dovico::ApiClient::API_VERSION}")
+            .to_return(body: response_body_2)
+
+          response = Dovico::ApiClient.get_paginated_list('ExampleObjects', 'ExampleObjects')
+
+          expect(response).to eq(
+            {
+              "ExampleObjects": [
+                { id: 1 },
+                { id: 2 },
+                { id: 3 },
+                { id: 4 },
+              ]
+            }.deep_stringify_keys
+          )
+        end
+      end
+
+    end
   end
 end

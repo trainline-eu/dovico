@@ -12,7 +12,6 @@ module Dovico
     attribute :start_date
     attribute :finish_date
 
-
     def self.parse(hash)
       self.new(
         id:           hash["ItemID"],
