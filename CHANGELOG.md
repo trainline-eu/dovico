@@ -1,5 +1,6 @@
 # Next version
 - Your contribution!
+- Add ruby 2.6 and remove ruby 2.2 from [Travis CI](.travis.yml)
 
 # Version 1.4.0
 - Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes trainline-eu/dovico#15
