@@ -1,6 +1,9 @@
-[![Build Status](https://travis-ci.org/trainline-eu/dovico.svg?branch=master)](https://travis-ci.org/trainline-eu/dovico)
+[![Build Status](https://travis-ci.org/trainline-eu/dovico.svg?branch=master)](https://travis-ci.org/trainline-eu/dovico) [![Gem Version](https://badge.fury.io/rb/dovico.svg)](https://rubygems.org/gems/dovico)
 
-Repository for Dovico API management.
+Dovico Command Line tool (CLI).
+
+This tool allows to fill and submit [Dovico](https://www.dovico.com/) timesheets via command line.
+It is not supported or endorsed by Dovico.
 
 # Requirements
 - Ruby 2.2.2 or newer
