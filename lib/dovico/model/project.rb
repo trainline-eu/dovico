@@ -12,11 +12,11 @@ module Dovico
     end
 
     def self.all
-      projects_search = ApiClient.get(URL_PATH)
+      projects_search = ApiClient.get_paginated_list(URL_PATH, "Assignments")
       projects = projects_search["Assignments"].map {|project_hash| parse(project_hash) }
 
       projects.each do |project|
-        tasks_search = ApiClient.get("#{URL_PATH}/#{project.assignement_id}")
+        tasks_search = ApiClient.get_paginated_list("#{URL_PATH}/#{project.assignement_id}", "Assignments")
         tasks = tasks_search["Assignments"].map {|task_hash| Task.parse(task_hash) }
 
         project.tasks = tasks.sort_by do |task|
