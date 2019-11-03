@@ -162,4 +162,4 @@ yes
 You are warmly welcome to contribute to the project!
 
 # Dovico API Documentation
-* http://apideveloper.dovico.com/
+* https://www.dovico.com/developer/API_doc/
