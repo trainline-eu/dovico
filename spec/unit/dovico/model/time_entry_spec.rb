@@ -41,6 +41,7 @@ module Dovico
         "Description": "Unit test",
       }.stringify_keys
     end
+    let(:employee_id) { "99" }
 
     describe ".parse" do
       it "parses the API hash" do
@@ -99,13 +100,19 @@ module Dovico
       end
 
       it 'calls the API and return an TimeEntry object' do
-        time_entries = Dovico::TimeEntry.search(Date.parse('2017-01-10'), Date.parse('2017-01-20'))
+        time_entries = Dovico::TimeEntry.search(employee_id, Date.parse('2017-01-10'), Date.parse('2017-01-20'))
 
         expect(time_entries.count).to eq(1)
 
         time_entry = time_entries.first
 
-        expect(ApiClient).to have_received(:get).with("#{Dovico::TimeEntry::URL_PATH}", { params: { daterange: "2017-01-10 2017-01-20" } })
+        expect(ApiClient).to have_received(:get).with("#{Dovico::TimeEntry::URL_PATH}/Employee/#{employee_id}/",
+          {
+            params: {
+              daterange: "2017-01-10 2017-01-20"
+            }
+          }
+        )
         expect(time_entry).to be_an(Dovico::TimeEntry)
         expect(time_entry.id).to eq('456')
       end
