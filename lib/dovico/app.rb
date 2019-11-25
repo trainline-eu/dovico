@@ -130,7 +130,7 @@ EOL
     end
 
     def clear_time_entries(start_date, end_date)
-      time_entries = TimeEntry.search(start_date, end_date)
+      time_entries = TimeEntry.search(myself.id, start_date, end_date)
       if highline.agree("• #{time_entries.count} Time Entries to be deleted. Are you sure? (yes/no)")
         time_entries.each do |time_entry|
           time_entry.delete!
