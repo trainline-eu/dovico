@@ -1,7 +1,5 @@
-require 'active_attr'
-
 module Dovico
-  class Employee
+  class Employee < Assignment
     URL_PATH = 'Employees'
 
     include ActiveAttr::Model
@@ -22,6 +20,10 @@ module Dovico
       employees = ApiClient.get("#{URL_PATH}/Me")
 
       parse(employees["Employees"].first)
+    end
+
+    def self.unserialize(employee_hash)
+      Employee.new(employee_hash)
     end
 
     def to_s

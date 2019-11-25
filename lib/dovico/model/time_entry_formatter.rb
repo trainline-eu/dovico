@@ -1,41 +1,42 @@
 module Dovico
   class TimeEntryFormatter
 
-    def initialize(projects)
-      @projects = projects
+    def initialize(assignments)
+      @assignments = assignments
     end
 
     def format_entries(time_entries)
-      text = ""
-      time_entries.map do |time_entry|
-        text += "#{}"
-        time_entry_text(time_entry)
-      end.join("\n")
+      time_entries.group_by(&:date).map do |date, day_time_entries|
+        hours = 0
+
+        day_time_entries.map do |time_entry|
+          string = "#{date} #{progress_bar(hours, time_entry.total_hours)} #{time_entry_text(time_entry)}"
+          hours += time_entry.total_hours.to_f
+
+          string
+        end
+      end.flatten.join("\n")
     end
 
     private
-    attr_accessor :projects
+    attr_accessor :assignments
+
+    def progress_bar(shift, total_hours)
+      progress_bar_width = (total_hours.to_f * 2).to_i
+      sprintf(
+        "[%- 14s]", " " * shift * 2 + "×" * progress_bar_width
+      )
+    end
 
     def time_entry_text(time_entry)
-      project, task = project_task(time_entry.project_id, time_entry.task_id)
+      project, task = assignments.find_project_task(time_entry.project_id, time_entry.task_id)
 
-      progress_bar_width = (time_entry.total_hours.to_f * 2).to_i
-      sprintf("%s [%s] %s : [%8s] %2sh %s %s",
-        time_entry.date,
-        "×" * progress_bar_width,
-        " " * [16 - progress_bar_width, 0].max,
+      sprintf("[%-12s] %2sh %s %s",
         time_entry.formal_sheet_status,
         time_entry.total_hours,
         project.name,
         task.name,
       )
-    end
-
-    def project_task(project_id, task_id)
-      project = projects.select{ |project| project.id == project_id }.first
-      task = project.tasks.select{ |task| task.id == task_id }.first
-
-      [project, task]
     end
   end
 end

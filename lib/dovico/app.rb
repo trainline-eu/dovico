@@ -26,8 +26,9 @@ EOL
 
     def add_script_options
       config.add_command_line_section('Display informations') do |slop|
-        slop.on :myself, 'Display info on yourself', argument: false
-        slop.on :tasks,  'Display info on tasks',    argument: false
+        slop.on :myself,        'Display info on yourself',    argument: false
+        slop.on :tasks,         'Display info on tasks',       argument: false
+        slop.on :force_refresh, 'Force refresh of tasks list', argument: false
       end
       config.add_command_line_section('Fill the timesheets') do |slop|
         slop.on :fill,         'Fill the timesheet', argument: false
@@ -100,8 +101,12 @@ EOL
 
     private
 
+    def assignments
+      @assignments ||= Assignments.new(force_refresh: config[:force_refresh])
+    end
+
     def myself
-      @myself ||= Employee.myself
+      assignments.myself
     end
 
     def display_myself
@@ -112,20 +117,20 @@ EOL
 
     def display_tasks
       puts "== List of available projects =="
-      puts Project.format_all
+      puts assignments.format_tree
       puts ""
     end
 
     def display_time_entries(start_date, end_date)
       puts "== List of Time Entries between #{start_date} and #{end_date} =="
-      formatter = TimeEntryFormatter.new(Project.all)
-      time_entries = TimeEntry.search(start_date, end_date)
+      formatter = TimeEntryFormatter.new(assignments)
+      time_entries = TimeEntry.search(myself.id, start_date, end_date)
       puts formatter.format_entries(time_entries)
       puts ""
     end
 
     def clear_time_entries(start_date, end_date)
-      time_entries = TimeEntry.search(start_date, end_date)
+      time_entries = TimeEntry.search(myself.id, start_date, end_date)
       if highline.agree("• #{time_entries.count} Time Entries to be deleted. Are you sure? (yes/no)")
         time_entries.each do |time_entry|
           time_entry.delete!

@@ -109,6 +109,11 @@ Project | Task | Description
    1600 |  100 | Frodo Project: Go home
 ~~~
 
+## Force tasks refresh
+`dovico --force-refresh --tasks`
+
+It will force the application to download a fresh list of assignments from Dovico and save it locally.
+
 ## Fill the timesheet
 `dovico --fill [date options]`
 
@@ -162,4 +167,4 @@ yes
 You are warmly welcome to contribute to the project!
 
 # Dovico API Documentation
-* http://apideveloper.dovico.com/
+* https://www.dovico.com/developer/API_doc/

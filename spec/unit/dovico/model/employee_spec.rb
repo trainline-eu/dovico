@@ -50,5 +50,20 @@ module Dovico
         expect(subject.to_s).to eq(" - ID:         123\n - First Name: James\n - Last Name:  Bond")
       end
     end
+
+    describe '.unserialize' do
+      let(:employee_hash) do
+        {
+          id: "007",
+          first_name: "James",
+          last_name: "Bond",
+        }
+      end
+      it 'returns new instance of the object' do
+        employee = Employee.unserialize(employee_hash)
+
+        expect(employee.id).to eq("007")
+      end
+    end
   end
 end

@@ -4,6 +4,10 @@
 - Set minimal versions of gems explicitly
 - Update minimal rubocop gem version (fix CVE-2017-8418)
 - Implement pagination for Assignments (Projets and Tasks) and Time Entries
+- Implement a cache so tasks are saved locally
+- Browse Assignments recursively so we handle TaskGroup (and any other forms of tree if it's ever allowed by Dovico)
+- Improve formatter so we have a nicer display for each day
+- Implement "Client" item
 
 # Version 1.4.0
 - Fix documentation: Specific months, weeks or days use `special_` prefix. Fixes trainline-eu/dovico#15

@@ -39,9 +39,9 @@ module Dovico
       TimeEntry.parse(entry)
     end
 
-    def self.search(start_date, end_date)
+    def self.search(employee_id, start_date, end_date)
       api_response = ApiClient.get_paginated_list(
-        URL_PATH,
+        "#{URL_PATH}/Employee/#{employee_id}/",
         "TimeEntries",
         params: {
           daterange: "#{start_date} #{end_date}"
@@ -50,7 +50,7 @@ module Dovico
 
       api_response["TimeEntries"].map do |time_entry|
         TimeEntry.parse(time_entry)
-      end
+      end.sort_by(&:date)
     end
 
     def self.batch_create!(assignments)
